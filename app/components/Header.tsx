@@ -35,7 +35,7 @@ export const Header: React.FC<Props> = ({
           <input
             type="text"
             placeholder="Add guests"
-            className="border pl-4 w-full h-full text-sm focus:outline-none focus:border-gray-600"
+            className="border pl-4 w-full h-full rounded-none text-sm focus:outline-none focus:border-gray-600"
             value={dispGuests}
             readOnly={true}
             onFocus={() => setIsOpen(true)}
