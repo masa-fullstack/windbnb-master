@@ -1,211 +1,85 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Layout from '../components/Layout'
+import Search from '../components/Search'
+import { MutableRefObject, useRef, useState } from 'react'
+import Stays from '../components/Stays'
+import { DispGuests, DispLocation, HandleSearch, Location } from '../types/stay'
 
-export const Home = (): JSX.Element => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+export const initialLocation: Location = {
+  city: '',
+  country: '',
+}
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+const Home = (): JSX.Element => {
+  //state
+  const [isOpen, setIsOpen] = useState(false) //Searchモーダルの開閉状態
+  const [cntAdults, setCntAdults] = useState(0) //adultsのカウンタ
+  const [cntChildren, setCntChildren] = useState(0) //childrenのカウンタ
+  const [location, setLocation] = useState(initialLocation) //location(=city)の値
 
-      <p className="description">
-        Get started by editing <code>pages/index.tsx</code>
-      </p>
+  //ref
+  const refLocation: MutableRefObject<Location> = useRef(initialLocation) //検索ボタン押下時のlocation(=city)の値
+  const refCntGuests: MutableRefObject<number> = useRef(0) //検索ボタン押下時のguests(adults+children)の値
 
-      <button
-        onClick={() => {
-          window.alert('With typescript and Jest')
-        }}
-      >
-        Test Button
-      </button>
+  //検索ボタン用ハンドラ
+  const handleSearch: HandleSearch = () => {
+    refLocation.current = location
+    refCntGuests.current = cntAdults + cntChildren
+    setIsOpen(false)
+  }
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  //display variable
+  let dispGuests: DispGuests
+  if (cntAdults === 0 && cntChildren === 0) {
+    dispGuests = ''
+  } else {
+    dispGuests = cntAdults + cntChildren + '  guests'
+  }
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
+  let dispLocation: DispLocation
+  if (location.city) {
+    dispLocation = `${location.city}, ${location.country}`
+  } else {
+    dispLocation = ''
+  }
 
-        <a
-          href="https://github.com/vercel/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
+  return (
+    <Layout
+      title="Stays in Finland"
+      dispLocation={dispLocation}
+      dispGuests={dispGuests}
+      setIsOpen={setIsOpen}
+      handleSearch={handleSearch}
+    >
+      {/* Searchモーダル */}
+      {isOpen && (
+        <div>
+          <div className="fixed top-0 left-0 z-50 w-full h-auto pb-20 bg-white">
+            <Search
+              location={location}
+              setLocation={setLocation}
+              cntAdults={cntAdults}
+              setCntAdults={setCntAdults}
+              cntChildren={cntChildren}
+              setCntChildren={setCntChildren}
+              dispGuests={dispGuests}
+              handleSearch={handleSearch}
+            />
+          </div>
+          <div
+            className="fixed top-0 left-0 z-10 w-screen h-screen bg-gray-700 bg-opacity-60"
+            onClick={() => setIsOpen(false)}
+          ></div>
+        </div>
+      )}
+      {/* 見出し */}
+      <div className="flex justify-between mb-8">
+        <div className="text-2xl font-bold">Stays in Finland</div>
+        <div className="text-sm text-gray-500">12+ stays</div>
       </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{' '}
-        <Image src="/vercel.svg" alt="Vercel Logo" height={'32'} width={'64'} />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
+      {/* 検索結果 */}
+      <Stays location={refLocation.current} cntGuests={refCntGuests.current} />
+    </Layout>
+  )
+}
 
 export default Home
