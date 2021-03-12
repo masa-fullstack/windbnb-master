@@ -16,7 +16,7 @@ const Stays: React.FC<Props> = ({ location, cntGuests }) => {
     )
   if (isLoading) return <div>loading...</div>
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
+    <div className="grid md:grid-cols-3 gap-8">
       {stays.map((stay, idx) => (
         <Card key={idx} stay={stay} />
       ))}
