@@ -15,6 +15,7 @@ const Stays: React.FC<Props> = ({ location, cntGuests }) => {
       <div className="text-3xl text-red-500 mb-10">{`データ取得でエラーが発生しました。エラー内容： ${error}`}</div>
     )
   if (isLoading) return <div>loading...</div>
+  if (stays.length === 0) return <div>No Data Found</div>
   return (
     <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
       {stays.map((stay, idx) => (
