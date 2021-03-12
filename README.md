@@ -67,7 +67,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/masa-fullstack/input-component-master
+$ git clone https://github.com/masa-fullstack/windbnb-master
 
 # Change directory
 $ cd input-component-master
