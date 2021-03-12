@@ -12,7 +12,7 @@ const Stays: React.FC<Props> = ({ location, cntGuests }) => {
 
   if (error)
     return (
-      <div className="text-3xl text-red-500 mb-10">{`データ取得でエラーが発生しました。エラー内容：${error}`}</div>
+      <div className="text-3xl text-red-500 mb-10">{`データ取得でエラーが発生しました。エラー内容： ${error}`}</div>
     )
   if (isLoading) return <div>loading...</div>
   return (
