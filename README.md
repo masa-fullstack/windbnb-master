@@ -70,7 +70,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 $ git clone https://github.com/masa-fullstack/windbnb-master
 
 # Change directory
-$ cd input-component-master
+$ cd windbnb-master
 
 ```
 
