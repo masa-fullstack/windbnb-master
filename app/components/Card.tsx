@@ -15,7 +15,7 @@ const Card: React.FC<Props> = ({ stay }) => {
       </div>
       <div className="flex justify-between items-center my-3">
         {stay.superHost && (
-          <div className="border border-gray-700 rounded-xl py-1 px-1 lg:text-xs md:text-xxs text-xs text-gray-500 lg:font-medium">
+          <div className="border border-gray-700 rounded-xl py-1 lg:px-2 md:px-1 px-2 lg:text-xs md:text-xxs text-xs text-gray-500 lg:font-medium">
             SUPER HOST
           </div>
         )}
