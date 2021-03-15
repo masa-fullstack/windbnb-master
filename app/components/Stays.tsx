@@ -17,10 +17,17 @@ const Stays: React.FC<Props> = ({ location, cntGuests }) => {
   if (isLoading) return <div>loading...</div>
   if (stays.length === 0) return <div>No Data Found</div>
   return (
-    <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
-      {stays.map((stay, idx) => (
-        <Card key={idx} stay={stay} />
-      ))}
+    <div>
+      {/* 見出し */}
+      <div className="flex justify-between mb-8">
+        <div className="text-2xl font-bold">Stays in Finland</div>
+        <div className="text-sm text-gray-500">{stays.length} stays</div>
+      </div>
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
+        {stays.map((stay, idx) => (
+          <Card key={idx} stay={stay} />
+        ))}
+      </div>
     </div>
   )
 }
