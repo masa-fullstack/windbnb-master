@@ -71,11 +71,6 @@ const Home = (): JSX.Element => {
           ></div>
         </div>
       )}
-      {/* 見出し */}
-      <div className="flex justify-between mb-8">
-        <div className="text-2xl font-bold">Stays in Finland</div>
-        <div className="text-sm text-gray-500">12+ stays</div>
-      </div>
       {/* 検索結果 */}
       <Stays location={refLocation.current} cntGuests={refCntGuests.current} />
     </Layout>
